@@ -44,7 +44,7 @@ app.get("/api/v1/userdetails/:id", (req, res) => {
   }
 });
 
-app.post("/api/v1/post",(req,res)=>{
+app.post("/api/v1/details",(req,res)=>{
  const {name,email,number} = req.body;
  
  if(!name || !email || !number){
