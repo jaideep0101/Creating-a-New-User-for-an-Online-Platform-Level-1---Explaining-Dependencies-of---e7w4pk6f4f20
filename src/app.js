@@ -50,7 +50,7 @@ app.post("/api/v1/details",(req,res)=>{
  
  if(!name || !mail || !number){
     res.status(400).json({
-        status: "error",
+        status: "Bad Request",
         message: "Missing required fields: name, mail or number"
     });
  }
@@ -66,7 +66,7 @@ app.post("/api/v1/details",(req,res)=>{
  userDetails.push(newProduct);
 
  return res.status(201).json({
-  "status": "Success",
+  "status": "Created",
   "message": "User registered successfully",
   "data":{
     "newProduct": {
