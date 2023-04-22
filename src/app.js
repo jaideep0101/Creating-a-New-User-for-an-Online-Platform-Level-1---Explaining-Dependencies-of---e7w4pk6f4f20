@@ -44,10 +44,11 @@ app.get("/api/v1/userdetails/:id", (req, res) => {
   }
 });
 
+
 app.post("/api/v1/details",(req,res)=>{
- const {name,email,number} = req.body;
+ const {name,mail,number} = req.body;
  
- if(!name || !email || !number){
+ if(!name || !mail || !number){
     res.status(400).json({
         status: "error",
         message: "Missing required fields: name, mail or number"
@@ -56,26 +57,26 @@ app.post("/api/v1/details",(req,res)=>{
  const lastUser = userDetails[userDetails.length - 1];
  const newId = lastUser ? lastUser+1 : 1;
 
- const newUser  = {
-    id: newId,
-    name: name,
-    email: email,
-    number: number
+ const newProduct = {
+    "id": newId,
+    "name": name,
+    "mail": mail,
+    "number": number
  };
  userDetails.push(newUser);
 
 fs.writeFile("./data/userDetails.json",JSON.stringify(userDetails),(err)=>{
   if(err){
     return res.status(500).json({
-        status: "error",
-        message: "Error writing user details to file",
+        "status": "error",
+        "message": "Error writing user details to file",
     });
   }  
   return res.status(201).json({
-    status: "success",
-    message: "User registerd successfully",
-    data: {
-        newUser,
+    "status": "success",
+    "message": "User registerd successfully",
+    "data": {
+        "newProduct",
     }
   })
 })
