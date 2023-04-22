@@ -26,7 +26,7 @@ app.get("/api/v1/details", (req, res) => {
 // GET endpoint for sending the products to client by id
 app.get("/api/v1/userdetails/:id", (req, res) => {
   let { id } = req.params;
-  id *= 1;
+
   const details = userDetails.find((details) => details.id === id);
   if (!details) {
     return res.status(404).send({
@@ -54,32 +54,30 @@ app.post("/api/v1/details",(req,res)=>{
         message: "Missing required fields: name, mail or number"
     });
  }
- const lastUser = userDetails[userDetails.length - 1];
- const newId = lastUser ? lastUser+1 : 1;
+ const lastUser = userDetails.length + 1;
+ 
 
  const newProduct = {
-    "id": newId,
+  "id":lastUser,
     "name": name,
     "mail": mail,
     "number": number
  };
- userDetails.push(newUser);
+ userDetails.push(newProduct);
 
-fs.writeFile(`${__dirname}/data/userDetails.json`,JSON.stringify(userDetails),(err)=>{
-  if(err){
-    return res.status(500).json({
-        "status": "error",
-        "message": "Error writing user details to file",
-    });
-  }  
-  return res.status(201).json({
-    "status": "success",
-    "message": "User registerd successfully",
-    "data": {
-        newProduct,
+ return res.status(201).json({
+  "status": "Success",
+  "message": "User registered successfully",
+  "data":{
+    "newProduct": {
+      "id":newProduct.id,
+      "name":newProduct.name,
+      "mail":newProduct.mail,
+      "number":newProduct.number
     }
-  })
-})
+  }
+ })
+
 })
 
 module.exports = app;
