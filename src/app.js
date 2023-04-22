@@ -76,7 +76,7 @@ fs.writeFile("./data/userDetails.json",JSON.stringify(userDetails),(err)=>{
     "status": "success",
     "message": "User registerd successfully",
     "data": {
-        "newProduct",
+        newProduct,
     }
   })
 })
