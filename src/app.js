@@ -65,7 +65,7 @@ app.post("/api/v1/details",(req,res)=>{
  };
  userDetails.push(newUser);
 
-fs.writeFile("./data/userDetails.json",JSON.stringify(userDetails),(err)=>{
+fs.writeFile(`${__dirname}/data/userDetails.json`,JSON.stringify(userDetails),(err)=>{
   if(err){
     return res.status(500).json({
         "status": "error",
