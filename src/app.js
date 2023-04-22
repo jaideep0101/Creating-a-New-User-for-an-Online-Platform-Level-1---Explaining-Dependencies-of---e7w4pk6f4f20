@@ -44,40 +44,24 @@ app.get("/api/v1/userdetails/:id", (req, res) => {
   }
 });
 
-
-app.post("/api/v1/details",(req,res)=>{
- const {name,mail,number} = req.body;
- 
- if(!name || !mail || !number){
-    res.status(400).json({
-        status: "Bad Request",
-        message: "Missing required fields: name, mail or number"
-    });
- }
- const lastUser = userDetails.length + 1;
- 
-
- const newProduct = {
-  "id":lastUser,
-    "name": name,
-    "mail": mail,
-    "number": number
- };
- userDetails.push(newProduct);
-
- return res.status(201).json({
-  "status": "Created",
-  "message": "User registered successfully",
-  "data":{
-    "newProduct": {
-      "id":newProduct.id,
-      "name":newProduct.name,
-      "mail":newProduct.mail,
-      "number":newProduct.number
+app.post("/api/v1/details", (req, res) => {
+  const newId = userDetails[userDetails.length - 1].id + 1;
+  const { name, mail, number } = req.body;
+  const newUser = { id: newId, name, mail, number };
+  userDetails.push(newUser);
+  fs.writeFile(
+    `${__dirname}/data/userDetails.json`,
+    JSON.stringify(userDetails),
+    (err) => {
+      res.status(201).json({
+        status: "Success",
+        message: "User registered successfully",
+        data: {
+          userDetails: newUser,
+        },
+      });
     }
-  }
- })
-
-})
+  );
+});
 
 module.exports = app;
